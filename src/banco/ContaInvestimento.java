@@ -6,7 +6,6 @@ import java.util.List;
 
 public class ContaInvestimento extends Conta {
 
-
     public void simularInvestimento() {
         double rendimento;
         String resposta = "";
@@ -16,7 +15,7 @@ public class ContaInvestimento extends Conta {
         while(!respostasPossiveis.contains(resposta)) {
             System.out.print("\nQual dos investimentos de renda fixa abaixo você gostaria de fazer a simulação de rendimento?" +
                     "\n1 - Selic\n2 - CDI\n3 - CDB\nq - sair\n--> ");
-            resposta = entrada.nextLine();
+            resposta = validaEntradaVazia(entrada.nextLine());
             switch (resposta){
                 case "1":
                     rendimento = (super.getRendaMensal()/100)*9.25;
@@ -36,6 +35,8 @@ public class ContaInvestimento extends Conta {
                     break;
                 case "q": case "Q":
                     return;
+                default:
+                    System.out.println("Não entendi o que você quis dizer com isso.");
             }
         }
     }
