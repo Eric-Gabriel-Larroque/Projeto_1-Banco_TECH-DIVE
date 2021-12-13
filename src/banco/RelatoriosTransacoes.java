@@ -9,6 +9,25 @@ public class RelatoriosTransacoes {
 
     private final Scanner entrada = new Scanner(System.in);
 
+    public String validaEntradaVazia(String entrada) {
+        Scanner sc = new Scanner(System.in);
+        while (entrada.isEmpty() || entrada.isBlank()) {
+            System.out.print("\nEntrada de dados vazia. Por favor, digite novamente: ");
+            entrada = sc.nextLine();
+        }
+        return entrada;
+    }
+
+    public double validaSomenteNumero(String entrada) {
+        Scanner sc = new Scanner(System.in);
+        final String NUMEROS_TEMPLATE = "[0-9]+";
+        while(!entrada.matches(NUMEROS_TEMPLATE)){
+            System.out.print("\nCaracteres inválidos. Insira somente números: ");
+            entrada = sc.nextLine();
+        }
+        return Double.parseDouble(entrada);
+    }
+
     public void listarContas() {
         List<Conta> contaCorrenteLista = new ArrayList<>();
         for(Conta contas: Conta.listaContas) {
@@ -35,7 +54,7 @@ public class RelatoriosTransacoes {
         while(!listaOpcoes.contains(opcoes)) {
             System.out.print("\nQuais contas você gostaria de listar?\n1 - Conta Poupança\n2 - Conta Corrente" +
                     "\n3 - Conta Investimento\nq - Sair\n--> ");
-            listar = entrada.nextLine();
+            listar = validaEntradaVazia(entrada.nextLine());
 
             switch (listar) {
                 case "1":
@@ -123,7 +142,7 @@ public class RelatoriosTransacoes {
                 System.out.print((i+1)+") "+Conta.contasUsuarios.get(i)+"\n");
             }
             System.out.print("\n--> ");
-            resposta = Integer.parseInt(entrada.nextLine());
+            resposta = (int) validaSomenteNumero(validaEntradaVazia(entrada.nextLine()));
             if(!Conta.contasUsuarios.contains(resposta)) {
                 System.out.println("Valor inválido ou número da conta inexistente.");
             } else if(Conta.listaContas.get(Conta.contasUsuarios.indexOf(resposta)).transacoes.size()==0) {
