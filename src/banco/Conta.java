@@ -1,9 +1,8 @@
 package banco;
 
-import org.apache.commons.collections.list.AbstractLinkedList;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
+import static banco.RelatoriosTransacoes.*;
 
 public  abstract class Conta {
 
@@ -271,27 +270,6 @@ public  abstract class Conta {
 
         }
     }
-
-    public String validaEntradaVazia(String entrada) {
-        Scanner sc = new Scanner(System.in);
-        while (entrada.isEmpty() || entrada.isBlank()) {
-            System.out.print("\nEntrada de dados vazia. Por favor, digite novamente: ");
-            entrada = sc.nextLine();
-        }
-        return entrada;
-    }
-
-    public double validaSomenteNumero(String entrada) {
-        Scanner sc = new Scanner(System.in);
-        final String NUMEROS_TEMPLATE = "[0-9]+";
-        while(!entrada.matches(NUMEROS_TEMPLATE)){
-            System.out.print("\nCaracteres inválidos. Insira somente números: ");
-            entrada = sc.nextLine();
-        }
-        return Double.parseDouble(entrada);
-    }
-
-
 
     public void alterarDados() {
         System.out.print("\nDigite seu nome: ");
