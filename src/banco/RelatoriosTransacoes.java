@@ -9,7 +9,7 @@ public class RelatoriosTransacoes {
 
     private final Scanner entrada = new Scanner(System.in);
 
-    public String validaEntradaVazia(String entrada) {
+    public static String validaEntradaVazia(String entrada) {
         Scanner sc = new Scanner(System.in);
         while (entrada.isEmpty() || entrada.isBlank()) {
             System.out.print("\nEntrada de dados vazia. Por favor, digite novamente: ");
@@ -18,7 +18,7 @@ public class RelatoriosTransacoes {
         return entrada;
     }
 
-    public double validaSomenteNumero(String entrada) {
+    public static double validaSomenteNumero(String entrada) {
         Scanner sc = new Scanner(System.in);
         final String NUMEROS_TEMPLATE = "[0-9]+";
         while(!entrada.matches(NUMEROS_TEMPLATE)){
