@@ -36,10 +36,7 @@ public  abstract class Conta {
         final String CPF_TEMPLATE = "\\d\\d\\d.\\d\\d\\d.\\d\\d\\d-\\d\\d";
         boolean valido = false;
         while(!valido) {
-            if(CPF.length()!=14){
-                System.out.print("\nNúmeros de caracteres inválido. Insira o CPF novamente como solicitado (xxx.xxx.xxx-xx): ");
-                CPF = entrada.nextLine();
-            } else if(!(CPF.matches(CPF_TEMPLATE))){
+            if(!(CPF.matches(CPF_TEMPLATE))){
                 System.out.print("\nCPF com caracteres inválidos. Insira novamente conforme solicitado (xxx.xxx.xxx-xx): ");
                 CPF = entrada.nextLine();
             } else if(listaCPF.contains(CPF)) {
@@ -98,7 +95,8 @@ public  abstract class Conta {
 
     private String  setNome() {
         System.out.print("\nInsira o seu nome: ");
-        this.nome = entrada.nextLine();
+
+        this.nome = validaEntradaVazia(entrada.nextLine());
         return nome;
     }
 
@@ -111,7 +109,7 @@ public  abstract class Conta {
 
     private double setRendaMensal() {
         System.out.print("\nDigite sua renda mensal: ");
-        this.rendaMensal = Integer.parseInt(entrada.nextLine());
+        this.rendaMensal = validaSomenteNumero(validaEntradaVazia(entrada.nextLine()));
         return rendaMensal;
     }
 
@@ -124,7 +122,7 @@ public  abstract class Conta {
     public double saque() {
         double valor;
         System.out.print("\nDigite o valor a ser sacado: ");
-        valor = Double.parseDouble(entrada.nextLine());
+        valor = validaSomenteNumero(validaEntradaVazia(entrada.nextLine()));
         if(valor>0&&this.saldo-valor >= 0) {
             this.saldo-=valor;
             System.out.printf("\n Valor de %.2f sacado com sucesso! Seu saldo agora é de %.2f",valor,this.saldo);
@@ -150,7 +148,7 @@ public  abstract class Conta {
         double limite = (this.getRendaMensal()/100)*15;
         double valor;
         System.out.print("\nDigite o valor a ser sacado: ");
-        valor = Double.parseDouble(entrada.nextLine());
+        valor = validaSomenteNumero(validaEntradaVazia(entrada.nextLine()));
         if(valor>0&&(this.saldo-valor) >= -limite) {
             this.saldo-=valor;
             System.out.printf("\n Valor de %.2f sacado com sucesso! Seu saldo agora é de %.2f",valor,this.saldo);
@@ -174,7 +172,7 @@ public  abstract class Conta {
         double valor = 0;
         while(valor<=0) {
         System.out.print("\nDigite o valor a ser feito o depósito: ");
-        valor = Double.parseDouble(entrada.nextLine());
+        valor = validaSomenteNumero(validaEntradaVazia(entrada.nextLine()));
             if(valor<=0) {
                 System.out.print("\nValor inválido.");
             } else {
@@ -183,6 +181,7 @@ public  abstract class Conta {
                         "\ntipo de transação: depósito" +
                         "\nconta: "+
                         contasUsuarios.get(listaContas.indexOf(this))+
+
                         "\nValor depositado: " + valor
                         +"\nData: "+ new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime())
                         +"\nHora: "+ new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime())+"\n");
@@ -221,7 +220,7 @@ public  abstract class Conta {
 
         while(!transferido) {
                 System.out.printf("\nDigite o valor a ser transferido: ");
-                valor = Double.parseDouble(new Scanner(System.in).nextLine());
+                valor = validaSomenteNumero(validaEntradaVazia(entrada.nextLine()));
             if(valor>0&&valor<=this.getSaldo()) {
                 if(agenciasUsuarios.size()==1) {
                     System.out.printf("\nAgências disponíveis para tranferência: %s (somente a sua)\nDICA: Crie uma" +
@@ -234,7 +233,7 @@ public  abstract class Conta {
                     System.out.print((i+1)+" ) "+agenciasUsuarios.get(i)+"\n");
                 }
                 System.out.print("--> ");
-                agenciaDestino = entrada.nextLine();
+                agenciaDestino = validaEntradaVazia(entrada.nextLine());
                 if(agenciasUsuarios.contains(agenciaDestino)) {
                     if(contasUsuarios.size()==1) {
                         System.out.printf("\nContas disponíveis para tranferência: %d (somente a sua)\nDICA: Crie uma" +
@@ -273,11 +272,32 @@ public  abstract class Conta {
         }
     }
 
+    public String validaEntradaVazia(String entrada) {
+        Scanner sc = new Scanner(System.in);
+        while (entrada.isEmpty() || entrada.isBlank()) {
+            System.out.print("\nEntrada de dados vazia. Por favor, digite novamente: ");
+            entrada = sc.nextLine();
+        }
+        return entrada;
+    }
+
+    public double validaSomenteNumero(String entrada) {
+        Scanner sc = new Scanner(System.in);
+        final String NUMEROS_TEMPLATE = "[0-9]+";
+        while(!entrada.matches(NUMEROS_TEMPLATE)){
+            System.out.print("\nCaracteres inválidos. Insira somente números: ");
+            entrada = sc.nextLine();
+        }
+        return Double.parseDouble(entrada);
+    }
+
+
+
     public void alterarDados() {
         System.out.print("\nDigite seu nome: ");
-        this.nome = entrada.nextLine();
+        this.nome = validaEntradaVazia(entrada.nextLine());
         System.out.print("\nDigite sua renda mensal: ");
-        this.rendaMensal = Double.parseDouble(entrada.nextLine());
+        this.rendaMensal = validaSomenteNumero(validaEntradaVazia(entrada.nextLine()));
         this.agencia = validaAgencia(entrada.nextLine());
         transacoes.add("\n------- Historico de Transação -------\n" +
                 "\ntipo de transação: alteração de dados cadastrais" +
@@ -330,7 +350,7 @@ public  abstract class Conta {
         } else if (this.getClass() == ContaInvestimento.class) {
             System.out.print("12 - Simular investimento\nq - sair\n--> ");
         }else {
-            System.out.print("--> ");
+            System.out.print("q - Sair\n--> ");
         }
         operacao = entrada.nextLine();
                 switch(operacao) {
