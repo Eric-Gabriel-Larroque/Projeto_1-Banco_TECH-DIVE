@@ -36,10 +36,10 @@ public  abstract class Conta {
         boolean valido = false;
         while(!valido) {
             if(!(CPF.matches(CPF_TEMPLATE))){
-                System.out.print("\nCPF com caracteres inválidos. Insira novamente conforme solicitado (xxx.xxx.xxx-xx): ");
+                System.out.print("\nCPF com caracteres inválidos ou com formato não autorizado. Insira novamente conforme solicitado (xxx.xxx.xxx-xx): ");
                 CPF = entrada.nextLine();
             } else if(listaCPF.contains(CPF)) {
-                System.out.print("\nEsse cpf já está contido em nossa base de dados. Digite novamente: ");
+                System.out.print("\nEsse CPF já está contido em nossa base de dados. Digite outro CPF: ");
                 CPF = entrada.nextLine();
             } else {
                 valido = true;
