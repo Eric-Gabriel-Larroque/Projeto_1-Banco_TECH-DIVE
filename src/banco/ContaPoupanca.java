@@ -12,7 +12,7 @@ public class ContaPoupanca extends Conta{
         double rendimentoCapital;
         int meses;
         System.out.print("Informe o número de meses que você quer simular o rendimento de seu capital: ");
-        meses = Integer.parseInt(super.getEntrada().nextLine());
+        meses = (int) validaSomenteNumero(validaEntradaVazia(entrada.nextLine()));
         rendimentoCapital = (super.getRendaMensal()/100)*(rendimentoMensal*meses);
         System.out.print("Atualmente o rendimento anual da poupança é de "+rendimentoAnual+"%\n");
         System.out.printf("Com a renda mensal de %.2f, o rendimento de seu capital em %d meses renderá %.2f reais.",
