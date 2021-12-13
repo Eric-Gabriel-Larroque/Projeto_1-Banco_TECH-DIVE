@@ -1,5 +1,7 @@
 package banco;
 
+import static banco.RelatoriosTransacoes.*;
+
 public class ContaPoupanca extends Conta{
 
 

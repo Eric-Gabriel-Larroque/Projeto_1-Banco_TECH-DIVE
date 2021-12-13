@@ -3,6 +3,8 @@ package banco;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import static banco.RelatoriosTransacoes.*;
+
 
 public class ContaInvestimento extends Conta {
 
