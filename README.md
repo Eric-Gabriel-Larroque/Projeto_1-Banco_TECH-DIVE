@@ -1,7 +1,6 @@
 # Projeto_1-Banco_TECH-DIVE
 
-[](amostra_projeto_TECH-DIVE.gif)
-
+[](./amostra_projeto_TECH-DIVE.gif)
 
 > Primeiro projeto em linha de comando desenvolvido em Java simulando operações bancárias de acordo com a conta escolhida (Investimento, Corrente ou Poupança).
 
